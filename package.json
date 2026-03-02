@@ -1,0 +1,14 @@
+{
+  "name": "fabric-voting-ledger",
+  "version": "1.0.0",
+  "description": "Voting chaincode",
+  "main": "index.js",
+  "type": "commonjs",
+  "scripts": {
+    "start": "fabric-chaincode-node start"
+  },
+  "dependencies": {
+    "fabric-contract-api": "^2.5.8",
+    "fabric-shim": "^2.5.8"
+  }
+}
