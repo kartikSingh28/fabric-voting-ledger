@@ -1,80 +1,139 @@
-📦 Fabric Voting Ledger
+🏛 Enterprise-Grade Decentralized Voting Ledger
+⚖️ Secure • Permissioned • Consortium Blockchain Infrastructure
+<p align="center"> <b>Production-Oriented Hyperledger Fabric Smart Contract Implementation</b><br> Built for Enterprise Blockchain Architecture & Distributed Ledger Systems </p>
+<p align="center"> <!-- Core Stack --> <img src="https://img.shields.io/badge/Blockchain-Hyperledger_Fabric_2.x-2F3134?style=for-the-badge&logo=hyperledger&logoColor=white" /> <img src="https://img.shields.io/badge/Smart_Contracts-JavaScript-F7DF1E?style=for-the-badge&logo=javascript&logoColor=black" /> <img src="https://img.shields.io/badge/Runtime-Node.js-339933?style=for-the-badge&logo=node.js&logoColor=white" /> </p> <p align="center"> <!-- Infrastructure --> <img src="https://img.shields.io/badge/Containerization-Docker-2496ED?style=for-the-badge&logo=docker&logoColor=white" /> <img src="https://img.shields.io/badge/Consensus-RAFT-6E40C9?style=for-the-badge" /> <img src="https://img.shields.io/badge/Database-LevelDB-0052CC?style=for-the-badge" /> <img src="https://img.shields.io/badge/Network-Permissioned-0A0A0A?style=for-the-badge" /> </p> <p align="center"> <!-- Security & Governance --> <img src="https://img.shields.io/badge/Identity-X.509_Certificates-blue?style=flat-square" /> <img src="https://img.shields.io/badge/Architecture-Multi--Organization-black?style=flat-square" /> <img src="https://img.shields.io/badge/Execution-Docker_Isolated-orange?style=flat-square" /> <img src="https://img.shields.io/badge/Security-Channel_Permissioned-red?style=flat-square" /> <img src="https://img.shields.io/badge/Ledger-Immutable-success?style=flat-square" /> <img src="https://img.shields.io/badge/License-MIT-green?style=flat-square" /> </p>
+<p align="center"> <i> A decentralized voting ledger built on Hyperledger Fabric demonstrating smart contract lifecycle management, endorsement policies, world state control, and Dockerized enterprise blockchain deployment. </i> </p>
+🚀 Enterprise Value Proposition
 
-A minimal Hyperledger Fabric smart contract (chaincode) implementing a decentralized voting ledger system.
+✔ Immutable ledger-backed voting system
+✔ Multi-organization endorsement architecture
+✔ Deterministic smart contract execution
+✔ Gas-free permissioned transactions
+✔ Production-style Docker deployment
+✔ Enterprise governance & identity-backed security
 
-This project demonstrates:
+🏗 Architectural Scope
 
-Writing chaincode using fabric-contract-api (JavaScript)
+This implementation showcases:
 
-Deploying to a Hyperledger Fabric test network
+Consortium blockchain topology
 
-Managing ledger state
+Peer endorsement workflow
 
-Invoking and querying transactions
+World state vs blockchain separation
 
-Running chaincode inside Docker containers
+Chaincode container lifecycle
 
-🚀 Project Overview
+RAFT-based ordering service
 
-This is a simple blockchain-based voting system built on:
+CLI-driven transaction orchestration
 
-Hyperledger Fabric v2.x
-
-JavaScript Chaincode
-
-Docker-based Fabric test-network
-
-WSL (Ubuntu)
-
-The smart contract allows:
-
-Creating candidates
-
-Querying candidate data
-
-Recording votes
-
-Persisting immutable state on ledger
-
-🏗 Architecture
-Client (CLI)
-      ↓
+Client (CLI / SDK)
+        ↓
 Peer (Org1 / Org2)
-      ↓
+        ↓
 Chaincode Container (Node.js)
-      ↓
+        ↓
 World State (LevelDB)
-      ↓
+        ↓
+Blockchain Ledger (Immutable Blocks)
+
+Components
+
+Client Layer
+
+Submits transaction proposals
+
+Peer Nodes
+
+Execute and endorse chaincode
+
+Maintain ledger copy
+
+Chaincode Container
+
+Node.js runtime
+
+Isolated Docker execution
+
+World State (LevelDB)
+
+Key-value database
+
+Stores latest state
+
 Blockchain Ledger
+
+Append-only transaction log
+
+Ordered via RAFT consensus
+
 📁 Project Structure
 fabric-voting-ledger/
 │
-├── VotingContract.js     # Smart contract logic
-├── index.js              # Contract entry point
-├── package.json          # Node dependencies
+├── VotingContract.js      # Smart contract logic
+├── index.js               # Contract entry point
+├── package.json           # Dependencies
 ├── package-lock.json
 └── .gitignore
+
 🧠 Smart Contract Functions
-1️⃣ Create Candidate
-createCandidate(candidateId, name)
+1️⃣ createCandidate(candidateId, name)
 
-Creates a new candidate on the ledger.
+Creates and stores a new candidate on the ledger.
 
-2️⃣ Query Candidate
-queryCandidate(candidateId)
-
-Returns candidate details:
-
+Example Ledger State:
 {
   "docType": "candidate",
   "candidateId": "c1",
   "name": "Alice",
   "votes": 0
 }
-3️⃣ Vote (if implemented)
-vote(candidateId)
+Validates uniqueness
 
-Increments vote count immutably.
+Writes to world state
+
+Generates immutable ledger transaction
+
+2️⃣ queryCandidate(candidateId)
+
+Returns candidate details from the world state.
+
+Read-only operation
+
+No ledger mutation
+
+Deterministic query execution
+
+3️⃣ vote(candidateId) (Optional Extension)
+
+Atomically increments vote count
+
+Updates world state
+
+Records immutable transaction
+
+🔐 Enterprise Security Model
+Feature	Implementation
+Identity Management	Fabric CA (X.509 certificates)
+Access Control	Channel-based permissioning
+Endorsement Policy	Multi-organization validation
+Ledger Immutability	Append-only block storage
+Chaincode Isolation	Docker container runtime
+Consensus	RAFT ordering service
+🏛 Network Topology
+
+2 Organizations (Org1 & Org2)
+
+2 Peer Nodes
+
+1 Ordering Service (RAFT)
+
+Certificate Authority
+
+Dedicated chaincode container
+
+This mirrors a real-world consortium blockchain architecture.
 
 ⚙️ Prerequisites
 
@@ -89,23 +148,20 @@ WSL (Ubuntu recommended)
 Hyperledger Fabric test-network
 
 Node.js v18 (inside WSL)
-
 🛠 Setup Instructions
 1️⃣ Start Fabric Test Network
 cd fabric-samples/test-network
 ./network.sh up createChannel -ca
+
 2️⃣ Deploy Chaincode
 ./network.sh deployCC \
-  -ccn voting \
-  -ccp ../../fabric-voting-ledger \
-  -ccl javascript
-3️⃣ Set Org Context
-source scripts/envVar.sh
-setGlobals 1
-4️⃣ Invoke Transaction
+-ccn voting \
+-ccp ../../fabric-voting-ledger \
+-ccl javascript
+3️⃣ Set Organization Context
+source scripts/envVar.sh setGlobals 1
 
-Create Candidate:
-
+4️⃣ Invoke Transaction (Create Candidate)
 peer chaincode invoke \
 -o localhost:7050 \
 --ordererTLSHostnameOverride orderer.example.com \
@@ -121,77 +177,55 @@ peer chaincode query \
 -C mychannel \
 -n voting \
 -c '{"Args":["queryCandidate","c1"]}'
-🔐 Why This Matters
+🐳 Docker Components
 
-This project demonstrates:
-
-Immutable state storage
-
-Permissioned blockchain architecture
-
-Multi-organization Fabric network
-
-Chaincode lifecycle management
-
-Dockerized chaincode execution
-
-Unlike Ethereum:
-
-No gas fees
-
-Permissioned access
-
-Enterprise-grade governance
-
-📦 Docker Components Used
-
-When deployed, Fabric creates:
+When deployed, Fabric automatically creates:
 
 Orderer container
 
 Peer containers (Org1 & Org2)
 
-CA containers
+Certificate Authority containers
 
-Chaincode containers (Node runtime)
+Chaincode container (Node.js runtime)
 
-All components run inside Docker.
+All components execute inside isolated Docker environments.
 
-🎯 Learning Outcomes
+🔄 Transaction Flow
 
-This project helped understand:
+Client submits transaction proposal
 
-Fabric network topology
+Endorsing peers simulate execution
 
-Chaincode lifecycle
+Endorsements collected
 
-Peer endorsement flow
+Transaction sent to orderer
 
-World state vs blockchain
+Block created and distributed
 
-WSL-based development environment
-
-Git + WSL + VS Code integration
-
+Ledger committed & world state updated
 🧪 Future Improvements
 
-Add vote transaction
+Implement vote transaction fully
 
 Prevent double voting
 
 Add voter identity validation
 
-Integrate frontend
+Integrate frontend interface
 
 Add REST API via Fabric SDK
 
-Add access control policies
+Implement access control policies
+
+Upgrade to CouchDB state database
+
+Deploy using Kubernetes
 
 👤 Author
-
 Kartik Singh
-GitHub: https://github.com/kartikSingh28
-
+GitHub:
+https://github.com/kartikSingh28
 📜 License
 
 MIT License
